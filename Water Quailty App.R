@@ -35,11 +35,11 @@ ui <- fluidPage(
 
 server <- (function(input, output) {
   Download.Stations.Selected <- reactive(input$Stations.Selected)
-  output$DLtable <- renderTable(DataPull[DataPull$STATION_NAME == input$Stations.Selected,])
+  output$DLtable <- renderTable(DataPull[DataPull$STATION_NAME %in% input$Stations.Selected,])
   output$downloadData <- downloadHandler(
     filename = function() {paste("WQData", Sys.Date(), ".csv", sep = " ")},
     content=function(file) {
-      write.csv(DataPull[DataPull$STATION_NAME == input$Stations.Selected,], file)
+      write.csv(DataPull[DataPull$STATION_NAME %in% input$Stations.Selected,], file)
     }
   )
 })
